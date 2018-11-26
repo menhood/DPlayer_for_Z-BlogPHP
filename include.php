@@ -42,134 +42,217 @@ function SCP_frame_src(){
 }
 function DPlayer_Edit_5(){
     echo <<<EOF
-    <input type="button" id="ShowButton_2" name="ShowButton_2" value="显示DP插入参数" class="button">
-    <style>
-    #dplayerinput{display:none;margin:5px;width:400px;height:100%;}
-    #iframechild{border-radius:10px;}
-    h4{display:inline}
-    #shortcode{display:none;margin:2px;}
-    #shortcodecopy{display:none;maigin:2px;}
-    #copysuccess{display:none;}
-    </style>
-<div id="" style="display: flex;" >
-    <div id="dplayerinput"  >
-    
-    <br>
-    <h4>图片地址格式：</h4>http://ddns.menhood.wang/img.jpg
-    <br>
-    <h4>视频地址格式</h4>：http://ddns.menhood.wang/video.mp4
-    <br>
-    <h4>图片地址：</h4><input type="text" oninput="dplayerurls()" value=""  width=100% id="dplayerpic">
-    <br>
-    <h4>视频地址：</h4><input type="text" oninput="dplayerurls()" value=""  width=100% id="dplayerurl">
-    <br>
-    <h4>是否开启弹幕:</h4><input type="checkbox" id="danmucheck" >
-    <br>
-    <h4>是否开启自动播放:</h4><input type="checkbox" id="autoplaycheck" >
-    <br>
-    <h4>是否开启预加载:</h4><input type="checkbox" id="preloadcheck" >
-    <script>
-    $(function(){
-        $("#ShowButton_2").click(
-            function(){
-                 if($("#dplayerinput").css("display")=='none'){
+<input type="button" id="ShowButton_2" name="ShowButton_2" value="显示DPlayer插入参数" class="button">
+<style>
+#dplayerinput {
+    display:none;
+    margin:5px;
+    width:576px;
+    height:100%;
+}
+#iframechild {
+    border-radius:10px;
+}
+h4 {
+    display:inline
+}
+#shortcode {
+    display:none;
+    margin:2px;
+    width:570px;
+    height:auto
+}
+#shortcodecopy {
+    maigin:2px;
+}
+#copysuccess {
+    display:none;
+}
+</style>
+<div id="" style="display: flex;">
+    <div id="dplayerinput">
+        <br>
+         <h4>视频地址格式</h4>：
+        <br>https://ddns.menhood.wang:2233/video/01.mp4
+        <br>
+         <h4>视频列表格式</h4>：
+        <br>https://ddns.menhood.wang:2233/video/
+        <br>
+         <h4>* 图片地址：</h4>
+
+        <input type="text" oninput="dplayerurls()" value="" width=100% id="dplayerpic" placeholder="https://ddns.menhood.wang:2233/img.jpg">
+        <br>
+         <h4>* 视频地址：</h4>
+
+        <input type="text" oninput="dplayerurls()" value="" width=100% id="dplayerurl" placeholder="https://ddns.menhood.wang:2233/video/01.mp4">
+        <br>
+         <h4>* 视频后缀：</h4>
+
+        <input type="text" value="mp4" width=100% id="suffix" placeholder="mp4">
+        <br>
+         <h4>* 视频集数：</h4>
+
+        <input type="text" value="" width=100% id="listmax" placeholder="12">
+        <br>
+         <h4>是否开启弹幕:</h4>
+
+        <input type="checkbox" id="danmucheck">
+        <br>
+         <h4>是否开启自动播放（对列表无效）:</h4>
+
+        <input type="checkbox" id="autoplaycheck">
+        <br>
+         <h4>是否开启预加载（对列表无效）:</h4>
+
+        <input type="checkbox" id="preloadcheck">
+        <script>
+        $(function () {
+            $("#ShowButton_2").click(function () {
+                if ($("#dplayerinput").css("display") == 'none') {
                     $("#dplayerinput").slideDown();
-                    
-                    $("#ShowButton_2").val("隐藏DP插入参数");
-                 }else{
+
+                    $("#ShowButton_2").val("隐藏DPlayer插入参数");
+                } else {
                     $("#dplayerinput").slideUp();
-                    $("#ShowButton_2").val("显示DP插入参数");
-                 }
+                    $("#ShowButton_2").val("显示DPlayer插入参数");
+                }
+            });
+
+            $("#toggletextarea").click(function () {
+                if ($("#shortcode").css("display") == 'none') {
+                    $("#shortcode").slideDown();
+
+                    $("#toggletextarea").val("隐藏代码区");
+                } else {
+                    $("#shortcode").slideUp();
+                    $("#toggletextarea").val("显示代码区");
+                }
+            });
+            
+            $("#clcodetext").click(function () {
+                $("#shortcode").val("");
+            });
+            
+            $("#insertcss").click(
+            function insertcss(){
+            var listcss="<style>.dplist{margin-top:20px} .dplist li{height:30px;width:auto;float:left;padding:5px;border:1px solid}</style>";
+            editor_api.editor.content.obj.execCommand('inserthtml', listcss);
+            document.getElementById("shortcode").value = document.getElementById("shortcode").value+listcss;
+            });
+
+            $("#dplisgenerate").click(function () {
+                var listurl = $("#dplayerurl").val();
+                var listpic = $("#dplayerpic").val();
+                var suffix = "." + $("#suffix").val();
+                var max = $("#listmax").val();
+                var urlarr = '';
+                for (i = 0; i < max; i++) {
+                    let pn = i + 1
+                    if (i < 9) {
+                        urlarr = urlarr + '<a href="javascript:void(0)" onclick="switchDPlayer(\'' + listurl + '0' + pn +
+                            suffix + '\')" ><li id="p' + i + '"><span>P' + pn + '</span></li></a>'
+                    } else {
+                        urlarr = urlarr + '<a href="javascript:void(0)" onclick="switchDPlayer(\'' + listurl + pn +
+                            suffix + '\')" ><li id="p' + i + '"><span>P' + pn + '</span></li></a>'
+                    }
+                }
+                //检查弹幕checkbox是否选中
+                if (document.getElementById("danmucheck").checked) {
+                    var listcode =
+                        "<link href=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.css\' rel=\'stylesheet\'><div id=\'dplayer\'></div><ul class='dplist'>" +
+                        urlarr +
+                        "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
+                        listurl + "01" + suffix +
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',user: cip}});function switchDPlayer(url){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();}<\/script>";
+                } else {
+                    var listcode =
+                        "<link href=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.css\' rel=\'stylesheet\'><div id=\'dplayer\'></div><ul class='dplist'>" +
+                        urlarr +
+                        "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
+                        listurl + "01" + suffix +
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url){dp.switchVideo({url: url});dp.toggle();}<\/script>";
+                }
+
+                editor_api.editor.content.obj.execCommand('inserthtml', listcode);
+                document.getElementById("shortcode").value = listcode;
             });
         });
-    $(function(){
-        $("#dplisgenerate").click(
-            function(){
-                 if($("#dplistiframe").css("display")=='none'){
-                        window.open('https://api.menhood.wang/dpplaylist');
-                    //$("#dplistiframe").slideDown();
-                    //$("#dplisgenerate").val("隐藏列表生成页");
-                    //$("#iframechild").attr("src","https://api.menhood.wang/dpplaylist/index.php");
-                 }else{
-                    //$("#dplistiframe").slideUp();
-                   // $("#dplisgenerate").val("显示列表生成页");
-                 }
-            });
-        });
-      
 
-	    var dplayerurl;
-	    var dplayerpic;
-	    var danmucheack;
-	    var dpcode;
 
-	    function dplayerurls(){
-		   dplayerurl = document.getElementById("dplayerurl").value;
-		   dplayerpic = document.getElementById("dplayerpic").value;
-		   
-	    }//文本框参数处理
-	    
-	    function dplayerinsert(){
-	    if (document.getElementById("danmucheck").checked){
-          danmucheack="true";
-      }else {
-        danmucheack="false";
-      }//检查弹幕checkbox是否选中
-          if (document.getElementById("autoplaycheck").checked){
-          autoplaycheck="true";
-      }else {
-        autoplaycheck="false";
-      }
-          if (document.getElementById("preloadcheck").checked){
-          preloadcheck="true";
-      }else {
-        preloadcheck="false";
-      }
-        dpcode = '[dplayer url="' + dplayerurl + '" pic="' + dplayerpic + '"preload='+'"'+ preloadcheck +'"'+'"autoplay='+'"'+ autoplaycheck +'"'+'danmu='+'"'+danmucheack+'"'+' / ]';
-            if(editor_api.editor.content.obj.execCommand){
-            editor_api.editor.content.obj.execCommand('inserthtml',dpcode);                
-            }else{
-                document.getElementById("shortcode").value=dpcode;
-               document.getElementById("shortcode").style.display="inline";
-               document.getElementById("shortcodecopy").style.display="inline";
-               document.getElementById("dpclear").style.display="none";
+        var dplayerurl;
+        var dplayerpic;
+        var danmucheack;
+        var dpcode;
+
+        function dplayerurls() {
+            dplayerurl = document.getElementById("dplayerurl").value;
+            dplayerpic = document.getElementById("dplayerpic").value;
+
+        } //文本框参数处理
+
+        function dplayerinsert() {
+            if (document.getElementById("danmucheck").checked) {
+                danmucheack = "true";
+            } else {
+                danmucheack = "false";
+            } //检查弹幕checkbox是否选中
+            if (document.getElementById("autoplaycheck").checked) {
+                autoplaycheck = "true";
+            } else {
+                autoplaycheck = "false";
             }
-
-            /* (document.getElementById("editor_content")){
-            document.getElementById("editor_content").innerHTML = dpcode;
-            }*/
-      }//插入单个视频代码
-      
-      function dpclear(){
-            if(document.getElementById("carea")){
-            editor_api.editor.content.obj.setContent('',false);                
+            if (document.getElementById("preloadcheck").checked) {
+                preloadcheck = "true";
+            } else {
+                preloadcheck = "false";
             }
-
-            if (document.getElementByName("carea-html-code")){
-            document.getElementByName("carea-html-code")[0].value = '';
+            dpcode = '[dplayer url="' + dplayerurl + '" pic="' + dplayerpic + '"preload=' + '"' + preloadcheck + '"' +
+                '"autoplay=' + '"' + autoplaycheck + '"' + 'danmu=' + '"' + danmucheack + '"' + ' / ]';
+            if (editor_api.editor.content.obj.execCommand) {
+                editor_api.editor.content.obj.execCommand('inserthtml', dpcode);
+                document.getElementById("shortcode").value = dpcode;
+            } else {
+                document.getElementById("shortcode").value = dpcode;
+                document.getElementById("shortcode").style.display = "inline";
+                document.getElementById("shortcodecopy").style.display = "inline";
+                document.getElementById("dpclear").style.display = "none";
             }
-      }//清除输入代码
-      function disinfo(){document.getElementById("copysuccess").style.display="none";}
-      function copycode(){
-        document.getElementById("shortcode").select(); // 选择对象
-        document.execCommand("Copy"); // 执行浏览器复制命令
-        document.getElementById("copysuccess").style.display="inline";
+        } //插入单个视频代码
+
+        function dpc() {
+            editor_api.editor.content.obj.setContent('', false);
+        }
+
+        function scd() {
+            document.getElementById("shortcode").style.display = "inline";
+        }
+
+        function disinfo() {
+            document.getElementById("copysuccess").style.display = "none";
+        }
+
+        function copycode() {
+            document.getElementById("shortcode").select(); // 选择对象
+            document.execCommand("Copy"); // 执行浏览器复制命令
+            document.getElementById("copysuccess").style.display = "inline";
+
+            setTimeout("disinfo()", 3000);
+        } //复制代码
         
-        setTimeout("disinfo()", 3000);
-        }//复制代码
-</script>
-    <br>
-    
-    <input type="button" onclick="dplayerinsert()" class="button" value="生成代码">
-    <input type="button" id="dplisgenerate" name="dplisgenerate" value="生成列表" class="button">
-    <input type="button" id="dpclear" onclick="dpclear()" class="button" value="清除输入" >
-    <hr>
-    <input type="text" id="shortcode" value="" ><input type="button"id="shortcodecopy" onclick="copycode()" class="button" value="复制" >
-    <br>
-    <span id="copysuccess">复制成功，请将短代码粘贴到编辑器内<span>
-    </div>
-    <div id="dplistiframe" style="display:none; ">
-    <iframe sandbox="allow-forms allow-same-origin allow-scripts" name="iframechild" id="iframechild" src=""  border="0" frameborder="no" framespacing="0" allowfullscreen="true" width=768 height=350 > </iframe>
+        
+        </script>
+        <br>
+        <br>
+        <input type="button" onclick="dplayerinsert()" class="button" value="生成代码">
+        <input type="button" id="dplisgenerate" name="dplisgenerate" value="生成列表" class="button">
+        <input type="button" id="dpclear" onclick="dpc()" class="button" value="清除编辑器">
+        <input type="button" id="toggletextarea" class="button" value="显示代码区">
+        <hr>
+        <textarea type="text" id="shortcode"></textarea>
+        <input type="button" id="shortcodecopy" onclick="copycode()" class="button" value="复制代码">
+        <input type="button" id="insertcss"  class="button" value="生成样式">
+        <input type="button" id="clcodetext"  class="button" value="清除代码区">
+        <br> <span id="copysuccess">复制成功，请将短代码粘贴到编辑器内！<span>
     </div>
  </div>    
 EOF;
