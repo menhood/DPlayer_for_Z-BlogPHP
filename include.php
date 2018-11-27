@@ -284,8 +284,6 @@ function DPlayer_Edit_5(){
                         listurl + "01" + suffix +
                         "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
                 }
-
-                editor_api.editor.content.obj.execCommand('inserthtml', listcode);
                 document.getElementById("shortcode").value = listcode;
             });
         });
