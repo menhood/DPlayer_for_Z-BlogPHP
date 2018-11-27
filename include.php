@@ -188,6 +188,10 @@ function DPlayer_Edit_5(){
                                 <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&diams;&nbsp;&nbsp;使用注意事项：</p>
                                 <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UE编辑器会出现插入转义，列表模式可复制代码区代码直接在html模式粘贴代码；</p>
                                 <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;默认样式可在代码区直接更改，如更改代码生成样式进入插件目录找到include.php查找修改即可</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&diams;&nbsp;&nbsp;插入列表顺序为：</p>
+                                <p align="left">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;填写地址、后缀、集数，点击生成列表代码按钮，点击生成列表样式代码按钮，点击复制代码区域代码按钮</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在html模式下粘贴代码然后发布</p>
                                 <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&loz;&nbsp;&nbsp;<a href="http://diygod.me" target="_blank">关于作者</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://github.com/MoePlayer/DPlayer_for_Z-BlogPHP/issues" target="_blank">意见反馈</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.anotherhome.net/2648"
                                     target="_blank">关于 DPlayer 播放器</a>
 
