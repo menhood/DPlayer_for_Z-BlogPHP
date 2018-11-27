@@ -1,5 +1,6 @@
 # [DPlayer_for_Z-BlogPHP](https://app.zblogcn.com/?id=1033)  
-
+## 使用
+[下载](https://github.com/menhood/DPlayer_for_Z-BlogPHP/archive/master.zip)上传到插件目录，改名为`DPlayer`后启用插件即可
 ### 2018-11-27更新
 
 添加了列表代码生成部分，支持UE编辑器
