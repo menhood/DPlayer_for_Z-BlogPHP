@@ -43,69 +43,179 @@ function SCP_frame_src(){
 function DPlayer_Edit_5(){
     echo <<<EOF
 <input type="button" id="ShowButton_2" name="ShowButton_2" value="显示DPlayer插入参数" class="button">
-<style>
-#dplayerinput {
-    display:none;
-    margin:5px;
-    width:576px;
-    height:100%;
-}
-#iframechild {
-    border-radius:10px;
-}
-h4 {
-    display:inline
-}
-#shortcode {
-    display:none;
-    margin:2px;
-    width:570px;
-    height:auto
-}
-#shortcodecopy {
-    maigin:2px;
-}
-#copysuccess {
-    display:none;
-}
-</style>
-<div id="" style="display: flex;">
-    <div id="dplayerinput">
-        <br>
-         <h4>视频地址格式</h4>：
-        <br>https://ddns.menhood.wang:2233/video/01.mp4
-        <br>
-         <h4>视频列表格式</h4>：
-        <br>https://ddns.menhood.wang:2233/video/
-        <br>
-         <h4>* 图片地址：</h4>
+        <style>
+        table, td, th, tr, .api, tr.color1, tr.color2, tr.color3, tr.color4 {
+            background: rgba(0, 0, 0, 0)!important;
+            border: 2px solid rgba(100, 100, 100, 0.2)!important;
+        }
+        .al-toggle-button {
+            appearance:none;
+            -webkit-appearance:none;
+            position:relative;
+            width:40px;
+            height:22px;
+            background:#dfdfdf;
+            border-radius:16px;
+            border:1px solid #dfdfdf;
+            outline:0;
+            box-sizing:border-box;
+            bottom: -5px;
+        }
+        .al-toggle-button:checked {
+            border-color:#04be02;
+            background-color:#04be02
+        }
+        .al-toggle-button:before, .al-toggle-button:after {
+            content:" ";
+            position:absolute;
+            top:0;
+            left:0;
+            height:20px;
+            border-radius:15px;
+            transition:transform .3s;
+            transition:-webkit-transform .3s;
+            transition:transform .3s, -webkit-transform .3s;
+            -webkit-transition:-webkit-transform .3s
+        }
+        .al-toggle-button:before {
+            width:20px;
+            background-color:#fdfdfd
+        }
+        .al-toggle-button:after {
+            width:20px;
+            background-color:white;
+            box-shadow:0 1px 3px rgba(0, 0, 0, 0.4)
+        }
+        .al-toggle-button:checked:before {
+            transform:scale(0);
+            -webkit-transform:scale(0)
+        }
+        .al-toggle-button:checked:after {
+            transform:translateX(20px);
+            -webkit-transform:translateX(20px)
+        }
+        #dplayerinput {
+            display:none;
+            margin:5px;
+            width:576px;
+            height:100%;
+        }
+        #iframechild {
+            border-radius:10px;
+        }
+        h4 {
+            display:inline
+        }
+        #shortcode {
+            display:;
+            margin:2px;
+            width:570px;
+            height:auto
+        }
+        #shortcodecopy {
+            maigin:2px;
+        }
+        #copysuccess {
+            display:none;
+        }
+        </style>
+        <div id="dplayerinput" style="border-radius: 3px; padding: 10px; ">
+            <div class="dplayerinputHeader">
+                <div id="dplayerinput2">
+                    <table width="90%" style='padding:0px;margin:0px;' cellspacing='0' cellpadding='0' class="tableBorder">
+                        <tr>
+                            <th width='20%'>
+                                <p align="center">参数</p>
+                            </th>
+                            <th width='70%'>
+                                <p align="center">内容</p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td><b><p align="center">图片地址</p></b>
 
-        <input type="text" oninput="dplayerurls()" value="" width=100% id="dplayerpic" placeholder="https://ddns.menhood.wang:2233/img.jpg">
-        <br>
-         <h4>* 视频地址：</h4>
+                            </td>
+                            <td>
+                                <p align="left">
+                                    <input type="text" oninput="dplayerurls()" value="" size=100% id="dplayerpic" placeholder="https://ddns.menhood.wang:2233/img.jpg">
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b><p align="center">视频/列表地址</p></b>
+                            </td>
+                            <td>
+                                <p align="left">
+                                    <input type="text" oninput="dplayerurls()" value="" size=100% id="dplayerurl" placeholder="https://ddns.menhood.wang:2233/video/01.mp4 或 https://ddns.menhood.wang:2233/video/">
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b><p align="center">后缀名/集数</p></b>
+                            </td>
+                            <td>
+                                <p align="left">
+                                    * 后缀名：
+                                    <input type="text" value="mp4" width=40% id="suffix" placeholder="mp4">
+                                    * 集数：
+                                    <input type="text" value="" width=30% id="listmax" placeholder="12">
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b><p align="center">附加/默认设置</p></b>
 
-        <input type="text" oninput="dplayerurls()" value="" width=100% id="dplayerurl" placeholder="https://ddns.menhood.wang:2233/video/01.mp4">
-        <br>
-         <h4>* 视频后缀：</h4>
+                            </td>
+                            <td>
+                                <p align="left"></p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;弹幕：
+                                    <input type="checkbox" class="al-toggle-button" id="danmucheck">
+                                </p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预加载（对列表无效）：
+                                    <input type="checkbox" id="preloadcheck" class="al-toggle-button">
+                                </p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自动播放（对列表无效）：
+                                    <input type="checkbox" id="autoplaycheck" class="al-toggle-button">
+                                </p>
+                                <p align="left">---------------------------------------------------------</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;代码区：
+                                    <textarea type="text" id="shortcode" width="100%" height="100px"></textarea>
+                                </p>
+                                <script>
+                                
+                                </script>
+                                <p align="left">---------------------------------------------------------</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&diams;&nbsp;&nbsp;使用注意事项：</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UE编辑器会出现插入转义，列表模式可复制代码区代码直接在html模式粘贴代码；</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;默认样式可在代码区直接更改，如更改代码生成样式进入插件目录找到include.php查找修改即可</p>
+                                <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&loz;&nbsp;&nbsp;<a href="http://diygod.me" target="_blank">关于作者</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://github.com/MoePlayer/DPlayer_for_Z-BlogPHP/issues" target="_blank">意见反馈</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://www.anotherhome.net/2648"
+                                    target="_blank">关于 DPlayer 播放器</a>
 
-        <input type="text" value="mp4" width=100% id="suffix" placeholder="mp4">
-        <br>
-         <h4>* 视频集数：</h4>
-
-        <input type="text" value="" width=100% id="listmax" placeholder="12">
-        <br>
-         <h4>是否开启弹幕:</h4>
-
-        <input type="checkbox" id="danmucheck">
-        <br>
-         <h4>是否开启自动播放（对列表无效）:</h4>
-
-        <input type="checkbox" id="autoplaycheck">
-        <br>
-         <h4>是否开启预加载（对列表无效）:</h4>
-
-        <input type="checkbox" id="preloadcheck">
-        <script>
+                                </p>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td><b><p align="center">操作</p></b>
+                            </td>
+                            <td>
+                            <p align="left">
+                            <input type="button" onclick="dplayerinsert()" class="button" value="生成视频短代码">
+                            <input type="button" id="dplisgenerate" name="dplisgenerate" value="生成列表代码" class="button">
+                            <input type="button" id="insertcss" class="button" value="生成列表样式代码">
+                            </p>
+                            <p align="left">
+                            <input type="button" id="dpclear" onclick="dpc()" class="button" value="清除编辑器内容">
+                            <input type="button" id="clcodetext" class="button" value="清除代码区域">
+                            <input type="button" id="shortcodecopy" onclick="copycode()" class="button" value="复制代码区域代码">
+                            </p> <span id="copysuccess">复制成功，请将短代码粘贴到编辑器内！<span>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                    <script>
         $(function () {
             $("#ShowButton_2").click(function () {
                 if ($("#dplayerinput").css("display") == 'none') {
@@ -135,7 +245,7 @@ h4 {
             
             $("#insertcss").click(
             function insertcss(){
-            var listcss="<style>.dplist{margin-top:20px} .dplist li{height:30px;width:auto;float:left;padding:5px;border:1px solid}</style>";
+            var listcss="<style>.dplist{margin-top:20px} .dplist li{height:30px;width:auto;float:left;padding:5px;border:1px solid} .dpactive{background-color:#00a1d6;color:#fff}</style>";
             editor_api.editor.content.obj.execCommand('inserthtml', listcss);
             document.getElementById("shortcode").value = document.getElementById("shortcode").value+listcss;
             });
@@ -150,10 +260,10 @@ h4 {
                     let pn = i + 1
                     if (i < 9) {
                         urlarr = urlarr + '<a href="javascript:void(0)" onclick="switchDPlayer(\'' + listurl + '0' + pn +
-                            suffix + '\')" ><li id="p' + i + '"><span>P' + pn + '</span></li></a>'
+                            suffix + '\','+i+')" ><li id="p' + i + '" name="dplistli" ><span>P' + pn + '</span></li></a>'
                     } else {
                         urlarr = urlarr + '<a href="javascript:void(0)" onclick="switchDPlayer(\'' + listurl + pn +
-                            suffix + '\')" ><li id="p' + i + '"><span>P' + pn + '</span></li></a>'
+                            suffix + '\','+i+')" ><li id="p' + i + '" name="dplistli" ><span>P' + pn + '</span></li></a>'
                     }
                 }
                 //检查弹幕checkbox是否选中
@@ -163,14 +273,14 @@ h4 {
                         urlarr +
                         "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
                         listurl + "01" + suffix +
-                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',user: cip}});function switchDPlayer(url){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();}<\/script>";
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',user: cip}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'\';};document.getElementById(\'"+pn+"\').className=\'dpactive\';}<\/script>";
                 } else {
                     var listcode =
                         "<link href=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.css\' rel=\'stylesheet\'><div id=\'dplayer\'></div><ul class='dplist'>" +
                         urlarr +
                         "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
                         listurl + "01" + suffix +
-                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url){dp.switchVideo({url: url});dp.toggle();}<\/script>";
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'\';};document.getElementById(\'"+pn+"\').className=\'dpactive\';}<\/script>";
                 }
 
                 editor_api.editor.content.obj.execCommand('inserthtml', listcode);
@@ -241,20 +351,9 @@ h4 {
         
         
         </script>
-        <br>
-        <br>
-        <input type="button" onclick="dplayerinsert()" class="button" value="生成代码">
-        <input type="button" id="dplisgenerate" name="dplisgenerate" value="生成列表" class="button">
-        <input type="button" id="dpclear" onclick="dpc()" class="button" value="清除编辑器">
-        <input type="button" id="toggletextarea" class="button" value="显示代码区">
-        <hr>
-        <textarea type="text" id="shortcode"></textarea>
-        <input type="button" id="shortcodecopy" onclick="copycode()" class="button" value="复制代码">
-        <input type="button" id="insertcss"  class="button" value="生成样式">
-        <input type="button" id="clcodetext"  class="button" value="清除代码区">
-        <br> <span id="copysuccess">复制成功，请将短代码粘贴到编辑器内！<span>
-    </div>
- </div>    
+                </div>
+            </div>
+        </div>
 EOF;
 }
 
