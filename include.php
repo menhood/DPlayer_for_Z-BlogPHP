@@ -132,7 +132,7 @@ function DPlayer_Edit_5(){
                             </th>
                         </tr>
                         <tr>
-                            <td><b><p align="center">图片地址</p></b>
+                            <td><b><p align="center">图片地址（不支持列表）</p></b>
 
                             </td>
                             <td>
@@ -273,14 +273,14 @@ function DPlayer_Edit_5(){
                         urlarr +
                         "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
                         listurl + "01" + suffix +
-                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',user: cip}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'\';};document.getElementById(\'"+pn+"\').className=\'dpactive\';}<\/script>";
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',user: cip}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
                 } else {
                     var listcode =
                         "<link href=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.css\' rel=\'stylesheet\'><div id=\'dplayer\'></div><ul class='dplist'>" +
                         urlarr +
                         "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
                         listurl + "01" + suffix +
-                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'\';};document.getElementById(\'"+pn+"\').className=\'dpactive\';}<\/script>";
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
                 }
 
                 editor_api.editor.content.obj.execCommand('inserthtml', listcode);
