@@ -1,6 +1,6 @@
 # [DPlayer_for_Z-BlogPHP](https://app.zblogcn.com/?id=1033)  
 
-### 2018-1-27更新
+### 2018-11-27更新
 
 添加了列表代码生成部分，支持UE编辑器
 
