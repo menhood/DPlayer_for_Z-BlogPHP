@@ -97,7 +97,6 @@ function DPlayer_Edit_5(){
         #dplayerinput {
             display:none;
             margin:5px;
-            width:576px;
             height:100%;
         }
         #iframechild {
@@ -120,24 +119,23 @@ function DPlayer_Edit_5(){
         }
         </style>
         <div id="dplayerinput" style="border-radius: 3px; padding: 10px; ">
-            <div class="dplayerinputHeader">
-                <div id="dplayerinput2">
+            
                     <table width="90%" style='padding:0px;margin:0px;' cellspacing='0' cellpadding='0' class="tableBorder">
                         <tr>
-                            <th width='20%'>
-                                <p align="center">参数</p>
+                            <th width='30%'>
+                                <p align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;参数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                             </th>
-                            <th width='70%'>
+                            <th width='60%'>
                                 <p align="center">内容</p>
                             </th>
                         </tr>
                         <tr>
-                            <td><b><p align="center">图片地址（不支持列表）</p></b>
+                            <td><b><p align="center">图片地址</p></b>
 
                             </td>
                             <td>
                                 <p align="left">
-                                    <input type="text" oninput="dplayerurls()" value="" size=100% id="dplayerpic" placeholder="https://ddns.menhood.wang:2233/img.jpg">
+                                    <input type="text" oninput="dplayerurls()" value="" size=80% id="dplayerpic" placeholder="https://ddns.menhood.wang:2233/img.jpg">
                                 </p>
                             </td>
                         </tr>
@@ -146,7 +144,7 @@ function DPlayer_Edit_5(){
                             </td>
                             <td>
                                 <p align="left">
-                                    <input type="text" oninput="dplayerurls()" value="" size=100% id="dplayerurl" placeholder="https://ddns.menhood.wang:2233/video/01.mp4 或 https://ddns.menhood.wang:2233/video/">
+                                    <input type="text" oninput="dplayerurls()" value="" size=80% id="dplayerurl" placeholder="https://ddns.menhood.wang:2233/video/01.mp4 或 https://ddns.menhood.wang:2233/video/">
                                 </p>
                             </td>
                         </tr>
@@ -355,8 +353,6 @@ function DPlayer_Edit_5(){
         
         
         </script>
-                </div>
-            </div>
         </div>
 EOF;
 }
