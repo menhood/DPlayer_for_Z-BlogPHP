@@ -157,6 +157,8 @@ function DPlayer_Edit_5(){
                                     <input type="text" value="mp4" width=40% id="suffix" placeholder="mp4">
                                     * 集数：
                                     <input type="text" value="" width=30% id="listmax" placeholder="12">
+                                      cid数组：
+                                    <input type="text" value="" width=30% id="cidarr" placeholder="[29892777,30219063,30670211,31144490,31692630,32143511,32618520,33204555,33712259,34221660,34768082,35330667,35955160,36514990,37096269,38263183,38862289,39470873,40120683,41316760,42332626,43252925,44248375,45267295]"> 
                                 </p>
                             </td>
                         </tr>
@@ -247,7 +249,7 @@ function DPlayer_Edit_5(){
             
             $("#insertcss").click(
             function insertcss(){
-            var listcss="<style>.dplist{margin-top:20px} .dplist li{height:30px;width:auto;float:left;padding:5px;border:1px solid} .dpactive{background-color:#00a1d6;color:#fff}</style>";
+            var listcss="<style>.dplist{margin-top:20px}.dplist li{padding: 0 8px;margin: 0 3px 8px;font-size: 12px;color: #666;border-radius: 2px;border: 1px solid #666;display: inline-block;vertical-align: top;}.dplist li:hover{color: #fff;text-decoration: none;border: 1px solid #2f4151;background: #2f4151;} .dpactive{background-color:#00a1d6;color:#fff}</style>";
             editor_api.editor.content.obj.execCommand('inserthtml', listcss);
             document.getElementById("shortcode").value = document.getElementById("shortcode").value+listcss;
             });
@@ -256,16 +258,20 @@ function DPlayer_Edit_5(){
                 var listurl = $("#dplayerurl").val();
                 var listpic = $("#dplayerpic").val();
                 var suffix = "." + $("#suffix").val();
+                var cidstr=$("#cidarr").val();
+                var cidarr=cidstr.split(',');
+                if ($("#cidarr").val()){
+                var addition="addition: ['https://api.prprpr.me/dplayer/v3/bilibili?cid="+ cidarr[0] +"'],"}else{var addition=" "}
                 var max = $("#listmax").val();
                 var urlarr = '';
                 for (i = 0; i < max; i++) {
                     let pn = i + 1
                     if (i < 9) {
                         urlarr = urlarr + '<a href="javascript:void(0)" onclick="switchDPlayer(\'' + listurl + '0' + pn +
-                            suffix + '\','+i+')" ><li id="p' + i + '" name="dplistli" ><span>P' + pn + '</span></li></a>'
+                            suffix + '\','+i+','+cidarr[i]+')" ><li id="p' + i + '" name="dplistli" ><span>P' + pn + '</span></li></a>'
                     } else {
                         urlarr = urlarr + '<a href="javascript:void(0)" onclick="switchDPlayer(\'' + listurl + pn +
-                            suffix + '\','+i+')" ><li id="p' + i + '" name="dplistli" ><span>P' + pn + '</span></li></a>'
+                            suffix + '\','+i+','+cidarr[i]+')" ><li id="p' + i + '" name="dplistli" ><span>P' + pn + '</span></li></a>'
                     }
                 }
                 //检查弹幕checkbox是否选中
@@ -275,14 +281,14 @@ function DPlayer_Edit_5(){
                         urlarr +
                         "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
                         listurl + "01" + suffix +
-                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',user: cip}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url},danmaku: {id: md5(url),api: \'https://api.prprpr.me/dplayer/\',"+ addition +"user: cip}});function switchDPlayer(url,pn,cid){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',addition: ['https://api.prprpr.me/dplayer/v3/bilibili?cid='+cid],user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
                 } else {
                     var listcode =
                         "<link href=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.css\' rel=\'stylesheet\'><div id=\'dplayer\'></div><ul class='dplist'>" +
                         urlarr +
                         "</ul><script src=\'https://cdnjs.loli.net/ajax/libs/dplayer/1.25.0/DPlayer.min.js\'><\/script><script src=\'https://api.menhood.wang/getcip/getcipv2.php\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/hls.js/0.9.1/hls.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/flv.js/1.4.2/flv.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/dashjs/2.9.2/dash.all.min.js\'><\/script><script src=\'https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js\'><\/script><script>var url='" +
                         listurl + "01" + suffix +
-                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url,pn){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
+                        "';const dp = new DPlayer({container: document.getElementById(\'dplayer\'),video: {url: url}});function switchDPlayer(url,pn,cid){dp.switchVideo({url: url}, {id: md5(url),api: 'https://api.prprpr.me/dplayer/',user: cip});dp.toggle();var li=document.getElementsByName(\'dplistli\');for(var i=0;i<li.length;i++){li[i].className=\'wbf\';};document.getElementById('p'+pn).className=\'dpactive\';}<\/script>";
                 }
                 document.getElementById("shortcode").value = listcode;
             });
